@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+    {% for category in categories %}
+        <li class="category-name"><a href="{% url 'category' category.id %}">{{ category.name }}</a></li>
+    {% endfor %}
+    
+{% endblock sidebar %}
+
+
+{% block content %}
+
+    <ol class="breadcrumb">
+        {% for crumb in crumbs %}
+            {% if forloop.last %}
+                <li class="active">{{ crumb.name }}</li>
+            {% else %}
+                <li><a href="{% url 'category' crumb.id %}">{{ crumb.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>ISBN</th>
+            <th>Buy</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td><img height="120" width="80" src="{{ MEDIA_URL }}{{ book.image }}"></td>
+                <td><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.ISBN }}</td>
+                <td><a href="{% url 'buy_now_stripe' book.id %}" )>Buy Now</a></td>
+                <td>
+                    <form method="post" action="{% url 'add_to_cart' book.id %}">
+                        {% csrf_token %}
+                        {% comment %}Quantity
+                        <input name='quantity' type="number" min="1" max="999">{% endcomment %}
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-default" onclick="location.href='{% url 'new_book' %}'">Add Book</button>
+{% endblock content %}

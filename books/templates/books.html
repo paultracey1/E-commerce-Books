@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+
+{% block sidebar %}
+    
+    <li class="category-name"><a href="/books/search/?q=Drama">Drama</a></li>
+    <li class="category-name"><a href="/books/search/?q=Thriller">Thriller</a></li>
+
+{% endblock sidebar %}
+
+
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Seller</th>
+            <th>ISBN</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <form method="GET" action="{% url 'search' %}">
+        <input name='q' type="text"/>
+        <button type="submit">Search</button>    
+        </form>
+
+
+        {% for book in books %}
+            <tr>
+                <td><img height="120" width="80" src="{{ MEDIA_URL }}{{ book.image }}"></td>
+                <td><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></td>
+                <td>{{ book.author }}</td>
+                <td><a href="{% url 'genre_books' book.genre %}">{{ book.genre }}</a></td>
+                <td>{{ book.status }} </td>
+                <td>{{ book.description|truncatewords:60 }}</td>
+                <td><a href="{% url 'seller_books' book.seller.id %}">{{ book.seller }}</a></td>
+                <td>{{ book.ISBN }}</td>
+
+                {% if book.seller == user %}
+                <td></td>
+                <td><p><button class="btn btn-default" onclick="location.href='{% url 'edit_book' book.id %}'">Edit</button> </p></td>
+                {% else %}
+                <td><a href="{% url 'buy_now_stripe' book.id %}" )>Buy Now</a></td>
+                <td>
+                    <form method="post" action="{% url 'add_to_cart' book.id %}">
+                        {% csrf_token %}
+                        <!--Quantity
+                        <input name='quantity' type="number" min="1" max="999">-->
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="btn btn-default" onclick="location.href='{% url 'new_book' %}'">Add Book</button>
+{% endblock %}
