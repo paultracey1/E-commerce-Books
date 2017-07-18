@@ -1,0 +1,1 @@
+C:\Users\Paul\virtualenvs\ecomm_env\Scripts\activate

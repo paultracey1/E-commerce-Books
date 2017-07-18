@@ -1,0 +1,1 @@
+web: gunicorn paul_e_commerce.wsgi:application
