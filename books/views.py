@@ -61,6 +61,25 @@ def edit_book(request, id):
     return render(request, 'bookaddform.html', {'form': form})
 
 
+def delete_book(request, id):
+
+    book = get_object_or_404(Book, pk=id)
+
+    if book.seller != request.user:
+        #return HttpResponseForbidden()
+        messages.error(request, "You don't have authorisation to edit that book.")
+        return redirect(reverse('books'))
+
+    
+    else:
+        book.delete()
+    books = Book.objects.filter(published_date__lte=timezone.now()
+                                ).order_by('-published_date')
+    args = {}
+    args.update(csrf(request))
+    return render(request, "books.html", {"books": books}, args)
+
+
 
 
 def do_search(request):
@@ -77,11 +96,12 @@ def seller_books(request, id):
 
 
 def genre_books(request, genre):
-    genre = get_object_or_404(Book, pk="genre")
-    books = Book.objects.filter(genre=genre).order_by('-published_date')
-    args = {}
-    args.update(csrf(request))
-    return render(request, "books.html", {"books": books}, args)
+    books = Book.objects.filter(genre__contains=genre).order_by('-published_date')
+    return render(request, 'books.html', {'books': books})
+
+def author_books(request, author):
+    books = Book.objects.filter(author__contains=author).order_by('-published_date')
+    return render(request, 'books.html', {'books': books})
 
 
 

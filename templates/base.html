@@ -21,7 +21,7 @@
             <li><a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
             <li><a href="{% url 'books' %}"><i class="fa fa-cube"></i> Books</a></li>
             {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="{% url 'seller_books' user.id %}"><i class="fa fa-user"></i> Profile</a></li>
                 <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Log Out</a></li>
             {%  else %}
                 <li><a href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Register</a></li>
@@ -29,7 +29,7 @@
             {% endif %}
             <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
         </ul>
-       <h1><span class="fui-settings-16 muted">Books</span></h1>
+       <h1><span class="fui-settings-16 muted">Loose Books</span></h1>
    </div>
    <hr>
     {% if messages %}
@@ -61,7 +61,7 @@
 
    <hr>
    <div class="footer">
-       <p>Made By Bootcampers and Django </p>
+       <p>Made By Paul Tracey </p>
    </div>
 </div>
 </body>

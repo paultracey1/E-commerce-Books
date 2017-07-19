@@ -19,19 +19,27 @@
             <th>Image</th>
             <th>Title</th>
             <th>Author</th>
+            <th>Genre</th>
+            <th>Status</th>
             <th>Description</th>
+            <th>Seller</th>
             <th>ISBN</th>
+            <th>Price</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
         {% for item in items %}
             <tr>
-                <td><img height="120" width="80" src="{{ MEDIA_URL }}{{ book.image }}"></td>
-                <td>{{ item.book.title }}</td>
-                <td>{{ item.book.author }}</td>
-                <td>{{ item.book.description }}</td>
+                <td><img height="120" width="80" src="{{ MEDIA_URL }}{{ item.book.image }}"></td>
+                <td><a href="{% url 'book_detail' item.book.id %}">{{ item.book.title }}</a></td>
+                <td><a href="{% url 'author_books' item.book.author %}">{{ item.book.author }}</a></td>
+                <td><a href="{% url 'genre_books' item.book.genre %}">{{ item.book.genre }}</a></td>
+                <td>{{ item.book.status }} </td>
+                <td>{{ item.book.description|truncatewords:60 }}</td>
+                <td><a href="{% url 'seller_books' item.book.seller.id %}">{{ item.book.seller }}</a></td>
                 <td>{{ item.book.ISBN }}</td>
+                <td>{{ item.book.price }}</td>
                 <td>
                     <form method="post" action="{% url 'remove_cart' item.id %}">
                         {% csrf_token %}
@@ -47,6 +55,11 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total:</td>
             <td>{{ total }}</td>
             <td></td>
             <td></td>

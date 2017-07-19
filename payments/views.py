@@ -29,6 +29,8 @@ def buy_now(request, id):
 
             if customer.paid:
                 messages.success(request, "You have successfully paid")
+                book.status = 'Sold'
+                book.save()
                 return redirect(reverse('books'))
             else:
                 messages.error(request, "Unable to take payment")

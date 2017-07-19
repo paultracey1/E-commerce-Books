@@ -2,7 +2,7 @@
 
 
 {% block sidebar %}
-    
+    <li class="category-name"><a href="/books/search/?q=">All</a></li>
     <li class="category-name"><a href="/books/search/?q=Drama">Drama</a></li>
     <li class="category-name"><a href="/books/search/?q=Thriller">Thriller</a></li>
 
@@ -21,6 +21,7 @@
             <th>Description</th>
             <th>Seller</th>
             <th>ISBN</th>
+            <th>Price</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -36,16 +37,22 @@
             <tr>
                 <td><img height="120" width="80" src="{{ MEDIA_URL }}{{ book.image }}"></td>
                 <td><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></td>
-                <td>{{ book.author }}</td>
+                <td><a href="{% url 'author_books' book.author %}">{{ book.author }}</a></td>
                 <td><a href="{% url 'genre_books' book.genre %}">{{ book.genre }}</a></td>
                 <td>{{ book.status }} </td>
                 <td>{{ book.description|truncatewords:60 }}</td>
                 <td><a href="{% url 'seller_books' book.seller.id %}">{{ book.seller }}</a></td>
                 <td>{{ book.ISBN }}</td>
+                <td>{{ book.price }}</td>
+
+
 
                 {% if book.seller == user %}
-                <td></td>
+                <td><p><button class="btn btn-default" onclick="location.href='{% url 'delete_book' book.id %}'">Delete</button> </p></td>
                 <td><p><button class="btn btn-default" onclick="location.href='{% url 'edit_book' book.id %}'">Edit</button> </p></td>
+                {% elif book.status == "Sold" %}
+                <td></td>
+                <td></td>
                 {% else %}
                 <td><a href="{% url 'buy_now_stripe' book.id %}" )>Buy Now</a></td>
                 <td>
