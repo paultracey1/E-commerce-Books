@@ -5,6 +5,7 @@
     <li class="category-name"><a href="/books/search/?q=">All</a></li>
     <li class="category-name"><a href="/books/search/?q=Drama">Drama</a></li>
     <li class="category-name"><a href="/books/search/?q=Thriller">Thriller</a></li>
+    <li class="category-name"><a href="/books/search/?q=Self help">Self help</a></li>
 
 {% endblock sidebar %}
 
@@ -40,7 +41,7 @@
                 <td><a href="{% url 'author_books' book.author %}">{{ book.author }}</a></td>
                 <td><a href="{% url 'genre_books' book.genre %}">{{ book.genre }}</a></td>
                 <td>{{ book.status }} </td>
-                <td>{{ book.description|truncatewords:60 }}</td>
+                <td>{{ book.description|truncatewords:30 }}</td>
                 <td><a href="{% url 'seller_books' book.seller.id %}">{{ book.seller }}</a></td>
                 <td>{{ book.ISBN }}</td>
                 <td>{{ book.price }}</td>

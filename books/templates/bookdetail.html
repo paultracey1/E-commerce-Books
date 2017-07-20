@@ -4,7 +4,7 @@
 
 
 <h1>{{book.title}}</h1>
-<img height="120" width="80" src="{{ MEDIA_URL }}{{ book.image }}">
+<img height="180" width="120" src="{{ MEDIA_URL }}{{ book.image }}">
 <p><a href="{% url 'author_books' book.author %}"><h4>{{book.author}}</h4></a></p>
 <p><a href="{% url 'genre_books' book.genre %}">{{ book.genre }}</a></p>
 <p>{{ book.status }}</p>

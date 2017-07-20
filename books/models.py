@@ -8,9 +8,11 @@ class Book(models.Model):
 
     DRAMA = 'Drama'
     THRILLER = 'Thriller'
+    SELF_HELP = 'Self help'
     GENRE = (
         (DRAMA, 'Drama'),
         (THRILLER, 'Thriller'),
+        (SELF_HELP, 'Self help'),
     )
 
     AVAILABLE = 'Available'
