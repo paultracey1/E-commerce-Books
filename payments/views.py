@@ -4,7 +4,6 @@ from payments.forms import MakePaymentForm
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.template.context_processors import csrf
 from django.conf import settings
-from products.models import Product
 from books.models import Book
 import stripe
 
