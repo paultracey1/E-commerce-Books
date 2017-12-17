@@ -2,37 +2,55 @@
  
 {% block content %}
 
+{% comment %}style="margin-left:10%;{% endcomment %}
 
-<h1>{{book.title}}</h1>
-<img height="180" width="120" src="{{ MEDIA_URL }}{{ book.image }}">
-<p><a href="{% url 'author_books' book.author %}"><h4>{{book.author}}</h4></a></p>
-<p><a href="{% url 'genre_books' book.genre %}">{{ book.genre }}</a></p>
-<p>{{ book.status }}</p>
-<p>{{book.description}}</p>
-<p><a href="{% url 'seller_books' book.seller.id %}">{{ book.seller }}</a></p>
-<p>{{book.ISBN}}</p>
-<h4>{{book.price}}</h4>
+<div class="row">
+
+    <div class="col-sm-5">
+        <img height="450" width="300" src="{{ MEDIA_URL }}{{ book.image }}">
+    </div>
+
+    <div class="col-sm-6">
+        <h1>{{book.title}}</h1>
+        <p><a href="{% url 'author_books' book.author %}"><h4>{{book.author}}</h4></a></p>
+
+<br>
+
+        <p>Genre: <a href="{% url 'genre_books' book.genre %}">{{ book.genre }}</a></p>
+        <p>Status: {{ book.status }}</p>
+        <p>{{book.description}}</p>
+        <p>Sold by: <a href="{% url 'seller_books' book.seller.id %}">{{ book.seller }}</a></p>
+        <p>ISBN: {{book.ISBN}}</p>
+
+<br>
+        <h4>Price: {{book.price}}</h4>
+    </div>
+
+</div>
+
+<br>
 
 {% comment %}<button class="btn btn-default" onclick="location.href='edit'">Edit</button>{% endcomment %}
 
 {% if book.seller == user %}
-<p><button class="btn btn-default" onclick="location.href='{% url 'edit_book' book.id %}'">Edit</button> </p>
+<p><button class="btn btn-default" onclick="location.href='{% url 'edit_book' book.id %}'">Edit</button>
                 {% elif book.status == "Sold" %}
                 <td></td>
                 <td></td>
 {% else %}
-<p><button class="btn btn-default" onclick="location.href='{% url 'buy_now_stripe' book.id %}'">Buy Book</button></p>
-<p><form method="post" action="{% url 'add_to_cart' book.id %}">
+<button class="btn btn-default" onclick="location.href='{% url 'buy_now_stripe' book.id %}'">Buy Book</button>
+<form method="post" action="{% url 'add_to_cart' book.id %}">
                         {% csrf_token %}
                         <!--Quantity
                         <input name='quantity' type="number" min="1" max="999">-->
                         <button class="btn btn-default", type="submit">Add to Cart</button>
-                    </form></p>
+                    </form>
 {% endif %}
 
-<br>
+<button class="btn btn-default" onclick="location.href='/books'">Back to Books</button> </p>
 
-<p><button class="btn btn-default" onclick="location.href='/books'">Back to Books</button> </p>
+<br>
+<br>
 
 {% load disqus_tags %}
 {% set_disqus_title post.title %}

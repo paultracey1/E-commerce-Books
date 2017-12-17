@@ -2,6 +2,14 @@
 
 
 {% block sidebar %}
+
+
+        <form method="GET" action="{% url 'search' %}">
+        <input name='q' type="text"/>
+        <button type="submit">Search</button>    
+        </form>
+
+        <br>
     <li class="category-name"><a href="/books/search/?q=">All</a></li>
     <li class="category-name"><a href="/books/search/?q=Drama">Drama</a></li>
     <li class="category-name"><a href="/books/search/?q=Thriller">Thriller</a></li>
@@ -11,6 +19,9 @@
 
 
 {% block content %}
+
+
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -28,10 +39,6 @@
         </thead>
         <tbody>
 
-        <form method="GET" action="{% url 'search' %}">
-        <input name='q' type="text"/>
-        <button type="submit">Search</button>    
-        </form>
 
 
         {% for book in books %}
@@ -68,7 +75,7 @@
 
             </tr>
         {% empty %}
-        <li>No contacts yet.</li>
+        <h4>Sorry! No books found by that name!</h4>
         {% endfor %}
         </tbody>
     </table>
