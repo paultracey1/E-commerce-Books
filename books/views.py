@@ -83,7 +83,7 @@ def delete_book(request, id):
 
 
 def do_search(request):
-    books = Book.objects.filter(Q(title__contains=request.GET['q']) | Q(author__contains=request.GET['q']) | Q(genre__contains=request.GET['q'])).order_by('-published_date')
+    books = Book.objects.filter(Q(title__icontains=request.GET['q']) | Q(author__icontains=request.GET['q']) | Q(genre__icontains=request.GET['q'])).order_by('-published_date')
     return render(request, 'books.html', {'books': books})
 
 

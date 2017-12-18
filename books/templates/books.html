@@ -56,8 +56,8 @@
 
 
                 {% if book.seller == user %}
-                <td><p><button class="btn btn-default" onclick="location.href='{% url 'delete_book' book.id %}'">Delete</button> </p></td>
                 <td><p><button class="btn btn-default" onclick="location.href='{% url 'edit_book' book.id %}'">Edit</button> </p></td>
+                <td><p><button class="btn btn-default" onclick="location.href='{% url 'delete_book' book.id %}'">Delete</button> </p></td>
                 {% elif book.status == "Sold" %}
                 <td></td>
                 <td></td>
